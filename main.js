@@ -1,0 +1,81 @@
+const appId = "1780b717"; 
+const appKey = "fbed309aec56be4dc1c5ad58ed571c90"; // Replace with your actual appKey
+
+let routeNumber = '9'; // Default route number
+
+// Function to fetch bus route data
+function fetchBusRouteData() {
+  const url = (appId === '' || appKey === '')
+    ? 'response.json'
+    : `https://transportapi.com/v3/uk/bus/route/SBLB/${routeNumber}/outbound/timetable.json?edge_geometry=true&app_id=${appId}&app_key=${appKey}`;
+
+  $.getJSON(url, data => {
+    const map = drawMap();
+    const stops = data.stops;
+    drawGeometry(stops, map);
+    drawStops(stops, map);
+  });
+}
+
+// Fetch initial bus route data
+fetchBusRouteData();
+
+// Function to draw the map
+function drawMap() {
+  const map = L.map('mapElement').setView([51.505, -0.09], 13);
+  
+  // Using Mapbox Tiles (or any other provider)
+  const urlTemplate = `https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png`;
+  
+  map.addLayer(L.tileLayer(urlTemplate, {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; ' +
+        '<a href="https://carto.com/attributions">CARTO</a>',
+    subdomains: ['a', 'b', 'c', 'd'],
+    maxZoom: 19,
+    id: 'map',
+    tileSize: 512,
+    zoomOffset: -1
+  }));
+  
+  return map;
+}
+
+// Function to draw geometry (route lines) on the map
+function drawGeometry(stops, map) {
+  const edgesLayerGroup = L.layerGroup();
+  map.addLayer(edgesLayerGroup);
+  
+  const polyLines = stops
+    .slice(0, -1)
+    .map(stop => stop.next.coordinates.map(a => [a[1], a[0]]));
+  
+  polyLines.forEach(polyLine => {
+    edgesLayerGroup.addLayer(L.polyline(polyLine));
+  });
+
+  map.fitBounds(polyLines.flat(1));
+}
+
+// Function to draw bus stops on the map
+function drawStops(stops, map) {
+  const stopsLayerGroup = L.layerGroup();
+  map.addLayer(stopsLayerGroup);
+  
+  stops.forEach(stop => {
+    const markerOptions = {
+      radius: 5,
+      color: '#612d08',
+    };
+    const marker = L.circleMarker(L.latLng(stop.latitude, stop.longitude), markerOptions);
+    stopsLayerGroup.addLayer(marker);
+    marker.bindTooltip(`${stop.name} - ${stop.locality}`);
+  });
+}
+
+// Event listener for the form submission
+document.getElementById('routeForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent the form from submitting in the traditional way
+  const routeInput = document.getElementById('routeInput').value; // Get the input value
+  routeNumber = routeInput; // Update the route number variable
+  fetchBusRouteData(); // Fetch data for the new route number
+});

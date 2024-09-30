@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bus Route Map</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+    <h1>Bus Route Map</h1>
+    <h3>Search for bus Route</h3>
+    <form id="routeForm">
+      <input type="text" id="routeInput" placeholder="Search for route number.." name="search" required>
+      <button type="submit">Search</button>
+    </form>
+    <p>Test Routes: 1, X9</p>
+    <div id="mapElement"></div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@latest/dist/leaflet.js"></script>
+
+    <!-- JavaScript -->
+    <script type="module" src="main.js"></script>
+</body>
+</html>
