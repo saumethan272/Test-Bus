@@ -60,8 +60,8 @@ function drawStops(stops, map) {
   
     stops.forEach(stop => {
         const markerOptions = {
-            radius: 5,
-            color: '#612d08',
+            radius: 6,
+            color: '#ff0000',
         };
         const marker = L.circleMarker(L.latLng(stop.latitude, stop.longitude), markerOptions);
         stopsLayerGroup.addLayer(marker);
