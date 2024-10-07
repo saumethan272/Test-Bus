@@ -9,7 +9,7 @@ let url = (appId === '' || appKey === '')
     : 'http://transportapi.com/v3/uk/public/journey/from/postcode:st52qd/to/postcode:ex85jf.json?service=silverrail' +
     `&app_id=${appId}&app_key=${appKey}`
 
-url = 'response.json';
+url = 'example-bus-journey-planner.json';
 
 $.getJSON(url, data => {
     const map = drawMap()
