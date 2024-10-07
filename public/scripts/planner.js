@@ -1,15 +1,15 @@
 
 // To make live requests get your app_id and app_key by signing up at https://developer.transportapi.com/signup
 // and filling them here
-const appId = "3502c81f"; 
-const appKey = "7e09399f73308c3d59c111a282af1369";
+const appId = "702de4e3"; 
+const appKey = "d1a9e5fcd9d9c796090c446ae086a899";
 
 let url = (appId === '' || appKey === '')
-    ? 'example-bus-journey-planner.json'
-    : 'http://transportapi.com/v3/uk/public/journey/from/postcode:st52qd/to/postcode:ex85jf.json?service=silverrail' +
+    ? './api-dump/example-bus-journey-planner.json'
+    : 'http://transportapi.com/v3/uk/public/journey/from/postcode:ab124rl/to/postcode:ab124pt.json?service=silverrail' +
     `&app_id=${appId}&app_key=${appKey}`
 
-url = 'example-bus-journey-planner.json';
+url = './api-dump/example-bus-journey-planner.json';
 
 $.getJSON(url, data => {
     const map = drawMap()
