@@ -1,16 +1,15 @@
-import 'jquery'
-import 'leaflet'
-import 'leaflet-rotatedmarker'
 
 // To make live requests get your app_id and app_key by signing up at https://developer.transportapi.com/signup
 // and filling them here
-const appId = '3502c81f'
-const appKey = '7e09399f73308c3d59c111a282af1369'
+const appId = '94820b1e'
+const appKey = 'a3a450ca543e4a41b2596f6452b0162e'
 
-const url = (appId === '' || appKey === '')
-  ? 'response.json'
+let url = (appId === '' || appKey === '')
+  ? 'response2.json'
   : 'https://transportapi.com/v3/uk/bus/service_timetables.json?service=1&operator=FABD&direction=outbound' +
     `&active=true&live=true&app_id=${appId}&app_key=${appKey}`
+
+//url = 'response2.json';
 
 $.getJSON(url, data => {
   const map = drawMap()
