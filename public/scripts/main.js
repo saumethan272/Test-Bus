@@ -7,7 +7,7 @@ let localMode = false; // Start in online mode
 // Function to fetch bus route data
 function fetchBusRouteData() {
     const url = (appId === '' || appKey === '' || localMode)
-        ? 'response.json'
+        ? './api-dump/example-bus-route.json'
         : `https://transportapi.com/v3/uk/bus/route/SBLB/${routeNumber}/outbound/timetable.json?edge_geometry=true&app_id=${appId}&app_key=${appKey}`;
 
     $.getJSON(url, data => {
