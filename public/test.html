@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Route Map with Leaflet</title>
+    <link rel="stylesheet" href="css/leaflet.css" />
+    <script src="scripts/leaflet.js"></script>
+    <script src="scripts/polyline.js"></script>
+    <style>
+        /* Set the map height and width */
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        // Initialize the map and set its view to a default location
+        const map = L.map('map').setView([57.1497, -2.0943], 13); // Aberdeen coordinates
+
+        // Add a tile layer from OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // The encoded polyline
+        const encodedPolyline = "wotzIrpsLJ^jB~EPRBBVBdByAtBaC^w@Po@Lu@FkACcA_AqLKwB?iFAm@]oDu@_HIcAGaBB_ABkAHcAaDgBQCIFaC~CoEeQKq@I_AIqHDk@Jk@b@qAPgADkBJqJkKYYMHm@jAeEtH{GHMBUQy]}AB[BoNRKIEg@oA`AW@]AWUwBkCkC_D{@{@eAy@_@U[?Qn@QjCg@xD[rAYl@c@j@URc@T_@JsOfAgHU{ADqFBqAIk@YUFMHELU\\_@?YMQc@Gk@?g@Fi@PYXULWL}BPoAX_AjBkCPo@PyA@cAEcAeC{PaEgRyDsNK_@kXkr@sAqCqBmDoAgBcBuBaBeBgEaDmCqAcCy@ai@_JkD}@wCcAuB_AmGwDaGaFc[q[}AqAk@a@_CcAwB_@kCMuBHaBXoGbBaBPkA?qAUm@So@a@gA_Ai@q@k@}@g@cAu@yBoCoK{@cC]y@m@cAg@o@g@e@m@a@q@_@o@Qm@IaBGsGXgB?}BMg[qDgASgKaCyAc@_DoAaCyAoAcA}B_Cy@gA{AaCyAkCy@gAUQWCk@^MTk@b@c@Dm@E]Y_AcBYUI?}@l@e@|@Qb@Q~@Gf@E`BRzF?fAEbAk@hGCh@BjBf@nIHjFN`KOfDEt@g@~DQx@g@hBf@iBPy@f@_EDu@NgDYmRg@oICkBBi@j@iGDcA?gAS{FDaBFg@P_APc@d@}@J[HgA?g@Jc@PSLCf@cAd@sAvAyCZy@Lu@Fu@?cAG}@Mu@_@w@c@o@g@[m@YeAnDAt@^rAtL`X|BxDbAvA`AfAtBxBjAz@fBbA~@\\~P`ECx@gKaCyAc@_DoAaCyAoAcA}B_Cy@gA{AaC_EqHuTcg@kB}Cg@o@eAkAs@i@qAy@yAm@}AYyBEuBHqGt@sCTuBDsBImBU}A[eDkA_[sO}BaAmB_@_DQqBLuZtEQDq@sVE{@QcAy@sCgHmSaGqY}C|CaErD}At@|Au@VUhD}C|C}CsNat@K[Wo@_@c@wAq@Sb@YP{@PmFLUFUPkB|CWZk@`@_AZeBf@NvNlCtNFnAPHFX?ZHNPb@nBzIoB{IQc@IOOTQBIUC[BQFQHCGoAmCuNOwNQ?m@ToEtCs@^kC|@[Py@lAiFdLkAbBmArA}AbAgBt@}AToBDcBU_Bc@oBmAgAkA}BeDaAmBu@}Bi@wBaD_K}CyHsBgEyBsDqAsBcH{Im@kAc@cA]y@Mu@MgAMk@_@WO_@?k@Pm@TGPHFNVPPH^GXSXa@R_ABm@CaASw@]y@g@u@[Q_@Q{Eo@qBi@cG}@cHyAaFyAyLwEsKsFw@UsEyB]ImGoDkCeAcBWiCYcAC_@Fg@C}KyDmB_@aBKgACkDTgGx@mCt@wD~AsC`BcHlEuDtBiBp@kEpAgBb@gBTeE\\kB@yT[oA?gC^kBf@cBx@eExBeAb@_B^}AFcBKgASsAk@{@k@gA_AiFiFuAu@}A[u@Gc@?UPQXIb@MPM?o@}@Q_BIOUSaBeC_LuS{EwM[gAKw@CGgMcIIBKFE?QUQQqE}AWCaALe@Tg@^aAhB_AlAYPcAXmAT}HhAEB}@jAoM`X_A`DCLGTIHI?GA[@OA{QiEcBg@kIqGc@WoOaz@`EuEL]Bg@qAsHU][c@GM?c@FYPe@V]XSPc@Bc@c@kB"
+
+        // Decode the polyline using the polyline library
+        const latlngs = polyline.decode(encodedPolyline).map(coords => [coords[0], coords[1]]);
+
+        // Create a polyline object and add it to the map
+        const route = L.polyline(latlngs, {
+            color: 'red',
+            weight: 4,
+            opacity: 0.8,
+        }).addTo(map);
+
+        // Fit the map to the route
+        map.fitBounds(route.getBounds());
+    </script>
+</body>
+</html>
